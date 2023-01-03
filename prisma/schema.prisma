@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id            String        @default(cuid())    @id
+  name          String        @unique
+  favourites    Favourites[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Skills {
+  id                String    @default(cuid())    @id
+  name              String    @unique
+  courseSkillMap    CourseSkillMap[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Courses {
+  id                String       @default(cuid())   @id
+  name              String
+  courseSkillMap    CourseSkillMap[]
+  favourites        Favourites[]
+  videos            Videos[]
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+}
+
+model CourseSkillMap {
+  course      Courses   @relation(fields: [courseId], references: [id])
+  courseId    String
+  skill       Skills    @relation(fields: [skillId], references: [id])
+  skillId     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@id([courseId, skillId])
+}
+
+model Videos {
+  id          String    @default(cuid())    @id
+  url         String
+  course      Courses   @relation(fields: [courseId], references: [id])
+  courseId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Favourites {
+  user        Users     @relation(fields: [userId], references: [id])
+  userId      String
+  course      Courses   @relation(fields: [courseId], references: [id])
+  courseId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@id([userId, courseId])
+}
