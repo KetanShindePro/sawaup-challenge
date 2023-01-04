@@ -18,20 +18,20 @@ export default function Home(props: HomeProps) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid xs={6} md={8}>
+        <Grid item xs={8}>
           <img
             src="https://www.sawaup.com/assets/icons/logo-white-sawaup.svg"
             alt="This is a logo Image."
             className={styles.logo}
           />
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid item xs={4}>
           data 1
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid item xs={4}>
           data 2
         </Grid>
-        <Grid xs={6} md={8}>
+        <Grid item xs={8}>
           data 3
         </Grid>
       </Grid>
