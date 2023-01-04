@@ -18,21 +18,22 @@ export default function Home(props: HomeProps) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={12} md={12} className={styles.alignCenter}>
           <img
             src="https://www.sawaup.com/assets/icons/logo-white-sawaup.svg"
             alt="This is a logo Image."
             className={styles.logo}
           />
         </Grid>
-        <Grid item xs={4}>
-          data 1
+        <Grid item xs={12} sm={12} md={4}>
+          {skills.map((skill) => {
+            return <div key={skill.id}>{skill.name}</div>;
+          })}
         </Grid>
-        <Grid item xs={4}>
-          data 2
-        </Grid>
-        <Grid item xs={8}>
-          data 3
+        <Grid item xs={12} sm={12} md={8}>
+          {courses.map((course) => {
+            return <div key={course.id}>{course.name}</div>;
+          })}
         </Grid>
       </Grid>
     </Box>

@@ -1,3 +1,25 @@
 .logo{
-  width: 20vw;
+  width: 15vw;
+}
+
+.alignCenter{
+  text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
+  .logo{
+    width: 20vw;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .logo{
+    width: 40vw;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo{
+    width: 50vw;
+  }
 }
