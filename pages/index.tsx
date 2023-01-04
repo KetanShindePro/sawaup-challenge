@@ -4,6 +4,8 @@ import { Courses, Skills } from "@prisma/client";
 import styles from "../styles/Home.module.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import SkillsPane from "../components/skills/skills-pane/skills-pane.component";
+import AllCourses from "../components/courses/all-courses/all-courses.component";
 
 type HomeProps = {
   courses: Courses[];
@@ -26,14 +28,10 @@ export default function Home(props: HomeProps) {
           />
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
-          {skills.map((skill) => {
-            return <div key={skill.id}>{skill.name}</div>;
-          })}
+          <SkillsPane skills={skills} />
         </Grid>
         <Grid item xs={12} sm={12} md={8}>
-          {courses.map((course) => {
-            return <div key={course.id}>{course.name}</div>;
-          })}
+          <AllCourses courses={courses} />
         </Grid>
       </Grid>
     </Box>
