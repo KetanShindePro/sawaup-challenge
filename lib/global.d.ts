@@ -1,3 +1,5 @@
+export interface global {}
+
 declare global {
-    prisma: PrismaClient;
+    var prisma: PrismaClient;
 }
