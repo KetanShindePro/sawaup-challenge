@@ -14,12 +14,10 @@ type HomeProps = {
 
 export default function Home(props: HomeProps) {
   const { courses, skills } = props;
-  console.log("courses: ", courses);
-  console.log("skills: ", skills);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={6}>
         <Grid item xs={12} sm={12} md={12} className={styles.alignCenter}>
           <img
             src="https://www.sawaup.com/assets/icons/logo-white-sawaup.svg"
