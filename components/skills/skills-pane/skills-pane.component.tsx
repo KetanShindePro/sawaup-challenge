@@ -5,12 +5,7 @@ import SkillsSelector from "../skills-selector/skills-selector.component";
 import SelectedSkills from "../selected-skills/selected-skills.component";
 import { Box, Typography } from "@mui/material";
 
-type SkillsPaneProps = {
-  skills: Skills[];
-};
-
-function SkillsPane(props: SkillsPaneProps) {
-  const { skills } = props;
+function SkillsPane() {
   return (
     <Box sx={{ m: "2vw" }}>
       <Grid container spacing={2}>

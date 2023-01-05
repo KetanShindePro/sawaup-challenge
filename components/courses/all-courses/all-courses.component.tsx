@@ -1,16 +1,15 @@
 import { Courses } from "@prisma/client";
+import { useSelector } from "react-redux";
+import { selectAllCourses } from "../../../store/slices/courses.slice";
+import CourseCard from "../../cards/cards.components";
 
-type AllCourses = {
-  courses: Courses[];
-};
-
-function AllCourses(props: AllCourses) {
-  const { courses } = props;
+function AllCourses() {
+  const courses = useSelector(selectAllCourses);
   return (
     <>
-      {/* {courses.map((course: Courses) => {
-        return <div key={course.id}>{course.name}</div>;
-      })} */}
+      {courses?.map((course: Courses) => {
+        return (<CourseCard key={course.id} course={course} />)
+      })}
     </>
   );
 }
