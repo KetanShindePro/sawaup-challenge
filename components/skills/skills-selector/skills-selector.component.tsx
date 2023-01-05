@@ -1,20 +1,17 @@
-import {
-  Box,
-  Chip,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { Box, Chip, Grid, TextField } from "@mui/material";
 import { Skills } from "@prisma/client";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectAllSkills,
+} from "../../../store/slices/skills.slice";
+import { addSelectedSkill } from "../../../store/actions";
 
-type SkillSelectorProps = {
-  skills: Skills[];
-};
-
-function SkillsSelector(props: SkillSelectorProps) {
-  const { skills } = props;
+function SkillsSelector() {
+  const skills = useSelector(selectAllSkills);
+  const dispatch = useDispatch();
 
   return (
-    <Box sx={{ mt: "2vw" }}>
+    <Box sx={{ mt: "2vw", mr: "3vw" }}>
       <Grid container spacing={6}>
         <Grid item xs={12} sm={12} md={12}>
           <TextField
@@ -26,18 +23,19 @@ function SkillsSelector(props: SkillSelectorProps) {
           />
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-            {skills.map((skill: Skills) => {
-              return (
-                <Chip
-                  key={skill.id}
-                  label={skill.name}
-                  sx={{m:'0.2rem'}}
-                  onClick={() => {
-                    console.log("I am clicked");
-                  }}
-                />
-              );
-            })}
+          {skills.map((skill: Skills) => {
+            return (
+              <Chip
+                key={skill.id}
+                label={skill.name}
+                sx={{ m: "0.2rem" }}
+                onClick={(event) => {
+                  console.log("skill.id", skill.id)
+                  dispatch(addSelectedSkill(skill.id));
+                }}
+              />
+            );
+          })}
         </Grid>
       </Grid>
     </Box>

@@ -1,4 +1,3 @@
-import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import { Courses, Skills } from "@prisma/client";
 import styles from "../styles/Home.module.css";
@@ -6,13 +5,16 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import SkillsPane from "../components/skills/skills-pane/skills-pane.component";
 import AllCourses from "../components/courses/all-courses/all-courses.component";
+import { connect } from "react-redux";
+import { wrapper } from "../store/store";
+import { setSkills } from "../store/slices/skills.slice";
 
 type HomeProps = {
   courses: Courses[];
   skills: Skills[];
 };
 
-export default function Home(props: HomeProps) {
+function Home(props: HomeProps) {
   const { courses, skills } = props;
 
   return (
@@ -36,25 +38,21 @@ export default function Home(props: HomeProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  courses: Courses[];
-}> = async () => {
-  const courses: Courses[] = await prisma.courses.findMany({
-    include: {
-      courseSkillMap: true,
-    },
-  });
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async () => {
+    const skills: Skills[] = await prisma.skills.findMany({
+      include: {
+        courseSkillMap: true,
+      },
+    });
+    store.dispatch({ type: setSkills, payload: skills });
 
-  const skills: Skills[] = await prisma.skills.findMany({
-    include: {
-      courseSkillMap: true,
-    },
-  });
+    return {
+      props: {
+        skills,
+      },
+    };
+  }
+);
 
-  return {
-    props: {
-      courses,
-      skills,
-    },
-  };
-};
+export default connect((state) => state)(Home);
