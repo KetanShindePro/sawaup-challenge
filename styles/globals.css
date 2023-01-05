@@ -13,7 +13,7 @@ body {
 body {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(140deg, #EADEDB 0%, #d486bc 50%, #dcdcdc 100%);
+  background-image: linear-gradient(140deg, #4a7dc6 0%, #EADEDB 100%);
   background-repeat: no-repeat;
   background-size: contain;
   margin: 1vw 2vw;

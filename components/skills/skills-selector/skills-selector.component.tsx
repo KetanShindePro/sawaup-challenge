@@ -1,8 +1,10 @@
-import { Search } from "@mui/icons-material";
-import { AppBar, Box, Grid, TextField, Typography } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import {
+  Box,
+  Chip,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { Skills } from "@prisma/client";
-import styles from "../../../styles/skills-selector.module.css";
 
 type SkillSelectorProps = {
   skills: Skills[];
@@ -20,14 +22,22 @@ function SkillsSelector(props: SkillSelectorProps) {
             label="Search Skills"
             type="search"
             placeholder="Search Skills"
-            color="secondary"
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          {skills.map((skill: Skills) => {
-            return <div key={skill.id}>{skill.name}</div>;
-          })}
+            {skills.map((skill: Skills) => {
+              return (
+                <Chip
+                  key={skill.id}
+                  label={skill.name}
+                  sx={{m:'0.2rem'}}
+                  onClick={() => {
+                    console.log("I am clicked");
+                  }}
+                />
+              );
+            })}
         </Grid>
       </Grid>
     </Box>
