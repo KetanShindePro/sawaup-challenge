@@ -1,9 +1,7 @@
 import { Box, Chip, Grid, TextField } from "@mui/material";
 import { Skills } from "@prisma/client";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectAllSkills,
-} from "../../../store/slices/skills.slice";
+import { selectAllSkills } from "../../../store/slices/skills.slice";
 import { addSelectedSkill } from "../../../store/actions";
 
 function SkillsSelector() {
@@ -11,8 +9,8 @@ function SkillsSelector() {
   const dispatch = useDispatch();
 
   return (
-    <Box sx={{ mt: "2vw", mr: "3vw" }}>
-      <Grid container spacing={6}>
+    <Box sx={{ mr: "3vw" }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12}>
           <TextField
             id="outlined-search"
@@ -29,8 +27,7 @@ function SkillsSelector() {
                 key={skill.id}
                 label={skill.name}
                 sx={{ m: "0.2rem" }}
-                onClick={(event) => {
-                  console.log("skill.id", skill.id)
+                onClick={() => {
                   dispatch(addSelectedSkill(skill.id));
                 }}
               />
