@@ -4,20 +4,23 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Courses } from "@prisma/client";
+import { CourseType } from "../../store/types";
 
 type CourseCard = {
-  course: Courses
-}
+  course: CourseType
+};
 
 function CourseCard(props: CourseCard) {
   const { course } = props;
+  const { videos } = course;
+  const slicedUrl = videos[0].url.split("=")
+  const videoId = slicedUrl[slicedUrl.length-1]
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
+        image={"https://img.youtube.com/vi/" + videoId + "/0.jpg"}
         title="green iguana"
       />
       <CardContent>

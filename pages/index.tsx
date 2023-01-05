@@ -1,5 +1,5 @@
 import prisma from "../lib/prisma";
-import { Courses, Skills } from "@prisma/client";
+import { Skills } from "@prisma/client";
 import styles from "../styles/Home.module.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { wrapper } from "../store/store";
 import { setSkills } from "../store/slices/skills.slice";
 import { setCourses } from "../store/slices/courses.slice";
+import { CourseType } from "../store/types";
 
 function Home() {
   return (
@@ -34,7 +35,7 @@ function Home() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
-    const courses: Courses[] = await prisma.courses.findMany({
+    const courses: CourseType[] = await prisma.courses.findMany({
       include: {
         courseSkillMap: true,
         videos: true,

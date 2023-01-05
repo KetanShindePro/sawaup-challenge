@@ -1,4 +1,13 @@
-import { Courses, Skills } from "@prisma/client";
+import { CourseSkillMap, Skills, Videos } from "@prisma/client";
+
+export type CourseType = {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    videos: Videos[];
+    courseSkillMap: CourseSkillMap[];
+  }
 
 export type SkillsStateType = {
     allSkills: Skills[],
@@ -6,7 +15,7 @@ export type SkillsStateType = {
 }
 
 export type CoursesStateType = {
-    allCourses: Courses[]
+    allCourses: CourseType[]
 }
 
 export type AppState = {

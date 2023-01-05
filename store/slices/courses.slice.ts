@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { hydrate } from "../actions";
-import { AppState, CoursesStateType } from "../types";
-import { Courses } from "@prisma/client";
+import { AppState, CourseType, CoursesStateType } from "../types";
 
 export const coursesSlice = createSlice({
   name: "courses",
@@ -13,7 +12,7 @@ export const coursesSlice = createSlice({
   reducers: {
     setCourses(
       state: CoursesStateType,
-      action: { payload: Courses[] }
+      action: { payload: CourseType[] }
     ): CoursesStateType {
       return {
         ...state,
