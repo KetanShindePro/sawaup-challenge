@@ -1,12 +1,12 @@
 import { CourseSkillMap, Skills, Videos } from "@prisma/client";
 
 export type CourseType = {
-    id: string;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-    videos: Videos[];
-    courseSkillMap: CourseSkillMap[];
+    id: string,
+    name: string,
+    createdAt: Date,
+    updatedAt: Date,
+    videos: Videos[],
+    courseSkillMap: CourseSkillMap[],
   }
 
 export type SkillsStateType = {
