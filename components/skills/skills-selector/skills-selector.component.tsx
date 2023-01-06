@@ -36,6 +36,7 @@ function SkillsSelector() {
               <Chip
                 key={skl.id}
                 label={skl.name}
+                data-testid={skl.id}
                 sx={{ m: "0.2rem" }}
                 onClick={() => {
                   dispatch(addSelectedSkill(skl.id));
