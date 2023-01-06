@@ -1,7 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
+import { AppState } from "./types";
 
-export const hydrate = createAction(HYDRATE, function prepare(payload: any) {
+export const hydrate = createAction(HYDRATE, function prepare(payload: AppState) {
   return {
     payload: payload,
   };

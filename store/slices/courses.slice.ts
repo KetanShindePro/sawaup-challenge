@@ -40,6 +40,6 @@ export const { setCourses } = coursesSlice.actions;
 export const selectAllCourses = (state: AppState) =>
   state?.[coursesSlice.name]?.allCourses;
 
-export const getSuggestedCourses = (state: AppState) => {
-    return state?.[coursesSlice.name]?.allCourses;
+export const getCourseById = (id: string) => (state: AppState) => {
+    return state?.[coursesSlice.name]?.allCourses.find((crs) => crs.id === id);
 }

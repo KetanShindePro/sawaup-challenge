@@ -9,6 +9,10 @@ const makeStore = () =>
       [skillsSlice.name]: skillsSlice.reducer,
       [coursesSlice.name]: coursesSlice.reducer,
     }),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
     devTools: true,
   });
 

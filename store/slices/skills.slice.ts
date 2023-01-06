@@ -25,10 +25,9 @@ export const skillsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(hydrate, (state, action) => {
-        //   console.log("HYDRATE", state, action.payload);
         return {
           ...state,
-          ...action.payload.skills,
+          allSkills: [...action.payload.skills.allSkills],
         };
       })
       .addCase(addSelectedSkill, (state, action) => {
