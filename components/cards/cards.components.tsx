@@ -1,43 +1,47 @@
+
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { CourseType } from "../../store/types";
+import { IconButton } from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useMemo } from "react";
+import React from "react";
 
 type CourseCard = {
-  course: CourseType
+  course: CourseType;
 };
 
-function CourseCard(props: CourseCard) {
+const CourseCard = React.memo(function CardComponent(props: CourseCard) {
   const { course } = props;
   const { videos } = course;
-  const slicedUrl = videos[0].url.split("=")
-  const videoId = slicedUrl[slicedUrl.length-1]
+  const memoizedVideoId: string = useMemo(() => {
+    const slicedUrl = videos?.[0].url.split("=")
+    return slicedUrl[slicedUrl.length - 1]
+  }, [videos?.[0].url]);
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: "16rem", height: "100%", m: "1rem" }}>
       <CardMedia
-        sx={{ height: 140 }}
-        image={"https://img.youtube.com/vi/" + videoId + "/0.jpg"}
+        sx={{ height: "9rem" }}
+        image={"https://img.youtube.com/vi/" + memoizedVideoId + "/0.jpg"}
         title="green iguana"
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        <Typography gutterBottom variant="h6" component="div">
+          {course.name}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <IconButton aria-label="add to favorites" >
+          <FavoriteIcon color="error" />
+        </IconButton>
       </CardActions>
     </Card>
   );
-}
+})
+
 
 export default CourseCard;
