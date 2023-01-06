@@ -1,4 +1,12 @@
-import { CourseSkillMap, Skills, Videos } from "@prisma/client";
+import { CourseSkillMap, Favourites, Videos } from "@prisma/client";
+
+export type UserType = {
+  id: string;
+  name: string;
+  favourites: Favourites[];
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export type CourseType = {
   id: string;
@@ -26,7 +34,12 @@ export type CoursesStateType = {
   allCourses: CourseType[];
 };
 
+export type UserStateType = {
+  data: UserType | null
+}
+
 export type AppState = {
+  user: UserStateType;
   skills: SkillsStateType;
   courses: CoursesStateType;
 };
