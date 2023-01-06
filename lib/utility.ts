@@ -37,5 +37,7 @@ export function filterCoursesForSelectedSkills(
     courseToAdd ? sortedFilteredCourses.push(courseToAdd) : null;
   }
 
-  return sortedFilteredCourses.length ? sortedFilteredCourses : courses;
+  return sortedFilteredCourses.length
+    ? sortedFilteredCourses.slice(0, 4)
+    : courses;
 }
