@@ -1,7 +1,6 @@
-import { Skills } from "@prisma/client";
 import { createSlice } from "@reduxjs/toolkit";
 import { hydrate, addSelectedSkill, removeSelectedSkill } from "../actions";
-import { AppState, SkillsStateType } from "../types";
+import { AppState, SkillType, SkillsStateType } from "../types";
 
 export const skillsSlice = createSlice({
   name: "skills",
@@ -14,7 +13,7 @@ export const skillsSlice = createSlice({
   reducers: {
     setSkills(
       state: SkillsStateType,
-      action: { payload: Skills[] }
+      action: { payload: SkillType[] }
     ): SkillsStateType {
       return {
         ...state,
