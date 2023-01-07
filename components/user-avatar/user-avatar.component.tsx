@@ -58,8 +58,8 @@ function UserAvatar() {
 
   return (
     <div>
-      <IconButton aria-label="Avatar">
-        <Avatar {...stringAvatar(userData?.name)} onClick={handleClick} />
+      <IconButton aria-label="Avatar" onClick={handleClick}>
+        <Avatar {...stringAvatar(userData?.name)} />
       </IconButton>
       <Menu
         id="demo-positioned-menu"

@@ -8,7 +8,7 @@ function WithLayout(WrappedComponent: JSX.Element) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={6}>
-        <Grid item xs={12} sm={12} md={12} className={styles.alignCenter}>
+        <Grid item xs={12} sm={12} md={12} className={styles.headerStyle}>
           <Link href="/">
             <img
               src="https://www.sawaup.com/assets/icons/logo-white-sawaup.svg"

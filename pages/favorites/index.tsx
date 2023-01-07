@@ -6,11 +6,19 @@ import { setCourses } from "../../store/slices/courses.slice";
 import { CourseType, SkillType } from "../../store/types";
 import { selectUserFavourites } from "../../store/slices/user.slice";
 import DisplayCourses from "../../components/courses/display-courses/display-courses.component";
+import { Typography } from "@mui/material";
 
 function Favorites() {
   const userFavouriteCourses = useSelector(selectUserFavourites);
 
-  return <DisplayCourses courses={userFavouriteCourses} />;
+  return (
+    <>
+      <Typography variant="h4" gutterBottom sx={{ m: "2rem" }}>
+        {"Favorite Courses"}
+      </Typography>
+      <DisplayCourses courses={userFavouriteCourses} />
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(

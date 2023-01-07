@@ -13,6 +13,8 @@ function SkillsPane() {
           <Typography variant="h5" gutterBottom>
             Selected skills for course suggestions
           </Typography>
+          (Please select atleast two skills to see suggestion. And you can not
+          select more than 10 skills.)
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <SelectedSkills />

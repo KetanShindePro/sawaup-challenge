@@ -1,12 +1,16 @@
 import { Box, Chip, Grid, TextField } from "@mui/material";
 import { Skills } from "@prisma/client";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllSkills } from "../../../store/slices/skills.slice";
+import {
+  getSelectedSkills,
+  selectAllSkills,
+} from "../../../store/slices/skills.slice";
 import { addSelectedSkill } from "../../../store/actions";
 import { useState } from "react";
 
 function SkillsSelector() {
   const skills = useSelector(selectAllSkills);
+  const selectedSkills = useSelector(getSelectedSkills);
   const dispatch = useDispatch();
 
   const [searchText, setSearchText] = useState("");
@@ -39,7 +43,9 @@ function SkillsSelector() {
                 data-testid={skl.id}
                 sx={{ m: "0.2rem" }}
                 onClick={() => {
-                  dispatch(addSelectedSkill(skl.id));
+                  if (selectedSkills.length < 10) {
+                    dispatch(addSelectedSkill(skl.id));
+                  }
                 }}
               />
             );
