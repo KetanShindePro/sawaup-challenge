@@ -2,11 +2,12 @@
   width: 15vw;
 }
 
-.alignCenter{
+.headerStyle{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 @media screen and (max-width: 1200px) {
