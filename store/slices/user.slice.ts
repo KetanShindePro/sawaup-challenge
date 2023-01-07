@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { hydrate } from "../actions";
 import { AppState, UserType, UserStateType } from "../types";
+import { coursesSlice } from "./courses.slice";
 
 export const userSlice = createSlice({
   name: "user",
@@ -42,5 +43,11 @@ export const { setUser } = userSlice.actions;
 
 export const getUserData = (state: AppState) => state?.[userSlice.name]?.data;
 
-export const selectUserFavourites = (state: AppState) =>
-  state?.[userSlice.name]?.data?.favourites;
+export const selectUserFavourites = (state: AppState) => {
+  const allCourses = state?.[coursesSlice.name]?.allCourses;
+  const favouritesCourses = state?.[userSlice.name]?.data?.favourites.map(
+    (fav) => allCourses.find((crs) => crs.id === fav.courseId)
+  );
+
+  return favouritesCourses?favouritesCourses: [];
+};

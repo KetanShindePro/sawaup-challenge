@@ -1,11 +1,9 @@
 import { useSelector } from "react-redux";
 import { selectAllCourses } from "../../../store/slices/courses.slice";
 import { getSelectedSkills } from "../../../store/slices/skills.slice";
-import CourseCard from "../../cards/cards.components";
-import { CourseType } from "../../../store/types";
-import { Grid } from "@mui/material";
 import { useMemo } from "react";
 import { filterCoursesForSelectedSkills } from "../../../lib/utility";
+import DisplayCourses from "../display-courses/display-courses.component";
 
 function AllCourses() {
   const courses = useSelector(selectAllCourses);
@@ -15,13 +13,7 @@ function AllCourses() {
     return filterCoursesForSelectedSkills(courses, selectedSkills);
   }, [selectedSkills]);
 
-  return (
-    <Grid container>
-      {memoisedFilteredCourses?.map((course: CourseType) => {
-        return <CourseCard key={course.id} course={course} />;
-      })}
-    </Grid>
-  );
+  return <DisplayCourses courses={memoisedFilteredCourses} />;
 }
 
 export default AllCourses;

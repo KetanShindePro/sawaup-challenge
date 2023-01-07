@@ -2,7 +2,6 @@ import prisma from "../lib/prisma";
 import Grid from "@mui/material/Grid";
 import SkillsPane from "../components/skills/skills-pane/skills-pane.component";
 import AllCourses from "../components/courses/all-courses/all-courses.component";
-import { connect } from "react-redux";
 import { wrapper } from "../store/store";
 import { setSkills } from "../store/slices/skills.slice";
 import { setCourses } from "../store/slices/courses.slice";

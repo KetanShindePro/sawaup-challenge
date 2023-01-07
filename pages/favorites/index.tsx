@@ -1,29 +1,16 @@
 import prisma from "../../lib/prisma";
-import Grid from "@mui/material/Grid";
-import SkillsPane from "../../components/skills/skills-pane/skills-pane.component";
-import AllCourses from "../../components/courses/all-courses/all-courses.component";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { wrapper } from "../../store/store";
 import { setSkills } from "../../store/slices/skills.slice";
 import { setCourses } from "../../store/slices/courses.slice";
-import { CourseType, SkillType, UserType } from "../../store/types";
-import { useEffect, useState } from "react";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import { getUserData, setUser } from "../../store/slices/user.slice";
+import { CourseType, SkillType } from "../../store/types";
+import { selectUserFavourites } from "../../store/slices/user.slice";
+import DisplayCourses from "../../components/courses/display-courses/display-courses.component";
 
 function Favorites() {
-  const userData = useSelector(getUserData);
+  const userFavouriteCourses = useSelector(selectUserFavourites);
 
-  return (
-    <>
-      <Grid item xs={12} sm={12} md={4}>
-        <SkillsPane />
-      </Grid>
-      <Grid item xs={12} sm={12} md={8}>
-        <AllCourses />
-      </Grid>
-    </>
-  );
+  return <DisplayCourses courses={userFavouriteCourses} />;
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -50,4 +37,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 );
 
-export default connect((state) => state)(Favorites);
+export default Favorites;
