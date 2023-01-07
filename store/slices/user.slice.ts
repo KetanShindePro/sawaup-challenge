@@ -41,7 +41,7 @@ export const userSlice = createSlice({
           data: {
             ...state.data,
             favourites: [
-              ...(state.data?.favourites as Favourites[]),
+              ...((state.data?.favourites)? state.data?.favourites as Favourites[]: []),
               action.payload,
             ],
           } as UserType,
