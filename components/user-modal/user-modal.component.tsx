@@ -32,7 +32,9 @@ function UserModal() {
     }
   }, [userData]);
 
-  const fetchOrSetUserData = async () => {
+  const fetchOrSetUserData = async (event: any) => {
+    event?.preventDefault();
+    
     const fetchResponse = await fetch("/api/get-user", {
       method: "POST",
       body: JSON.stringify({ username }),
@@ -44,7 +46,7 @@ function UserModal() {
         body: JSON.stringify({ username }),
       });
 
-      usrDt = await setResponse.json()
+      usrDt = await setResponse.json();
     }
     dispatch(setUser(usrDt?.user));
   };
@@ -62,22 +64,30 @@ function UserModal() {
         <Typography id="modal-modal-description">
           (Use the previous one if already entered.)
         </Typography>
-        <TextField
-          id="outlined-basic"
-          label="Username"
-          variant="outlined"
-          value={username}
-          sx={{ mt: 2 }}
-          fullWidth
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <Button
-          variant="contained"
-          sx={{ mt: 2 }}
-          onClick={() => fetchOrSetUserData()}
-        >
-          Enter
-        </Button>
+        <form onSubmit={fetchOrSetUserData}>
+          <TextField
+            id="outlined-basic"
+            label="Username"
+            variant="outlined"
+            value={username}
+            sx={{ mt: 2 }}
+            fullWidth
+            onChange={(event) => setUsername(event.target.value)}
+            // onKeyDown={(evt) => {
+            //   if (evt.key === "Enter") {
+            //     fetchOrSetUserData();
+            //   }
+            // }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ mt: 2 }}
+            // onClick={() => fetchOrSetUserData()}
+          >
+            Enter
+          </Button>
+        </form>
       </Box>
     </Modal>
   );

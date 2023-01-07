@@ -4,6 +4,9 @@ export function filterCoursesForSelectedSkills(
   courses: CourseType[],
   selectedSkills: SkillType[]
 ) {
+  if (selectedSkills.length < 2) {
+    return courses;
+  }
   let filteredCourses: { [key: string]: number } = {};
   let sortedFilteredCourses: CourseType[] = [];
 
