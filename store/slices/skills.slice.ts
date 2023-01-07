@@ -31,15 +31,22 @@ export const skillsSlice = createSlice({
         };
       })
       .addCase(addSelectedSkill, (state, action) => {
-        let skillToBeAdded = state.allSkills.find(
+        const skillAlreadyExists = state.selectedSkills.find(
           (skl) => skl.id === action.payload
         );
-        return skillToBeAdded
-          ? {
-              ...state,
-              selectedSkills: [...state.selectedSkills, skillToBeAdded],
-            }
-          : state;
+        if (skillAlreadyExists) {
+          return state;
+        } else {
+          let skillToBeAdded = state.allSkills.find(
+            (skl) => skl.id === action.payload
+          );
+          return skillToBeAdded
+            ? {
+                ...state,
+                selectedSkills: [...state.selectedSkills, skillToBeAdded],
+              }
+            : state;
+        }
       })
       .addCase(removeSelectedSkill, (state, action) => {
         let filteredSelectedSkills = state.selectedSkills.filter(
