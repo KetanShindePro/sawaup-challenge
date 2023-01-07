@@ -6,7 +6,7 @@ function DisplayCourses(props: { courses: (CourseType | undefined)[] }) {
   const { courses } = props;
 
   return (
-    <Grid container>
+    <Grid container sx={{mt: "2rem"}}>
       {courses?.map((course) => {
         return course?<CourseCard key={course.id} course={course} />:null;
       })}
