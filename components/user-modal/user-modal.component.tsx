@@ -32,13 +32,21 @@ function UserModal() {
     }
   }, [userData]);
 
-  const fetchUserData = async () => {
-    const response = await fetch("/api/get-user", {
+  const fetchOrSetUserData = async () => {
+    const fetchResponse = await fetch("/api/get-user", {
       method: "POST",
       body: JSON.stringify({ username }),
     });
+    let usrDt = await fetchResponse.json();
+    if (!usrDt?.user) {
+      const setResponse = await fetch("/api/set-user", {
+        method: "POST",
+        body: JSON.stringify({ username }),
+      });
 
-    dispatch(setUser(await response.json()));
+      usrDt = await setResponse.json()
+    }
+    dispatch(setUser(usrDt?.user));
   };
 
   return (
@@ -56,7 +64,6 @@ function UserModal() {
         </Typography>
         <TextField
           id="outlined-basic"
-          F
           label="Username"
           variant="outlined"
           value={username}
@@ -67,7 +74,7 @@ function UserModal() {
         <Button
           variant="contained"
           sx={{ mt: 2 }}
-          onClick={() => fetchUserData()}
+          onClick={() => fetchOrSetUserData()}
         >
           Enter
         </Button>
