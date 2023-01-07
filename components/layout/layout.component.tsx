@@ -1,9 +1,8 @@
-import { Box, Grid } from "@mui/material";
 import styles from "../../styles/layout.module.css";
+import { Box, Grid } from "@mui/material";
+import UserModal from "../user-modal/user-modal.component";
 
-function WithLayout(
-  WrappedComponent: JSX.Element
-) {
+function WithLayout(WrappedComponent: JSX.Element) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={6}>
@@ -15,6 +14,7 @@ function WithLayout(
           />
         </Grid>
         {WrappedComponent}
+        <UserModal />
       </Grid>
     </Box>
   );
