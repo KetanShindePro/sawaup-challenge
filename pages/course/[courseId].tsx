@@ -1,4 +1,5 @@
-import { Box, Grid, Typography } from "@mui/material";
+import prisma from "../../lib/prisma";
+import { Grid, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import ReactPlayer from "react-player";
@@ -23,14 +24,19 @@ function CourseDisplay() {
 
   return (
     <>
-      <Grid item xs={12} sm={12} md={12} sx={{ml:'8vw'}}>
+      <Grid item xs={12} sm={12} md={12} sx={{ ml: "8vw" }}>
         <Typography variant="h5" gutterBottom>
           {"Course - " + course?.name}
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} sx={{ml:'8vw'}}>
+      <Grid item xs={12} sm={12} md={12} sx={{ ml: "8vw" }}>
         {hasWindow && (
-          <ReactPlayer url={video?.url} controls={true} width={"80vw"} height={"40vw"} />
+          <ReactPlayer
+            url={video?.url}
+            controls={true}
+            width={"80vw"}
+            height={"40vw"}
+          />
         )}
       </Grid>
     </>
