@@ -45,9 +45,9 @@ export const getUserData = (state: AppState) => state?.[userSlice.name]?.data;
 
 export const selectUserFavourites = (state: AppState) => {
   const allCourses = state?.[coursesSlice.name]?.allCourses;
-  const favouritesCourses = state?.[userSlice.name]?.data?.favourites.map(
+  const favouritesCourses = state?.[userSlice.name]?.data?.favourites?.map(
     (fav) => allCourses.find((crs) => crs.id === fav.courseId)
   );
 
-  return favouritesCourses?favouritesCourses: [];
+  return favouritesCourses?.length ? favouritesCourses : [];
 };

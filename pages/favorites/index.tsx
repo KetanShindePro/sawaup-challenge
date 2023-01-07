@@ -16,7 +16,7 @@ function Favorites() {
       <Typography variant="h4" gutterBottom sx={{ m: "2rem" }}>
         {"Favorite Courses"}
       </Typography>
-      <DisplayCourses courses={userFavouriteCourses} />;
+      <DisplayCourses courses={userFavouriteCourses} />
     </>
   );
 }
