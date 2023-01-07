@@ -46,21 +46,27 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
     }
   }, [favourites, course]);
 
-  const toggleFavorites = async () => {
+  const toggleFavorites = () => {
     if (!isFavorite) {
-      const fetchResponse = await fetch("/api/set-favorite", {
+      const fetchResponse = fetch("/api/set-favorite", {
         method: "POST",
         body: JSON.stringify({ userId: userData?.id, courseId: id }),
       });
-      let setFavoriteResp = await fetchResponse.json();
-      dispatch(addFavoriteCourse(setFavoriteResp?.favourite));
+      fetchResponse.then(async (data) => {
+        console.log("set-favorite : ", data);
+        let setFavoriteResp = await data.json();
+        dispatch(addFavoriteCourse(setFavoriteResp?.favourite));
+      });
     } else {
-      const fetchResponse = await fetch("/api/remove-favorite", {
+      const fetchResponse = fetch("/api/remove-favorite", {
         method: "POST",
         body: JSON.stringify({ favoriteId: favoriteEntry?.id }),
       });
-      let removeFavoriteResp = await fetchResponse.json();
-      dispatch(removeFavoriteCourse(removeFavoriteResp?.favourite));
+      fetchResponse.then(async (data) => {
+        console.log("remove-favorite : ", data);
+        let removeFavoriteResp = await data.json();
+        dispatch(removeFavoriteCourse(removeFavoriteResp?.favourite));
+      });
     }
     setFavorite(!isFavorite);
   };
