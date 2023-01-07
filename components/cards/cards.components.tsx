@@ -6,15 +6,25 @@ import Typography from "@mui/material/Typography";
 import { CourseType } from "../../store/types";
 import { CardActionArea, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import React from "react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "../../store/slices/user.slice";
+import { addFavoriteCourse } from "../../store/actions";
 
 type CourseCard = {
   course: CourseType;
 };
 
 const CourseCard = React.memo(function CardComponent(props: CourseCard) {
+  const [isFavorite, setFavorite] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const userData = useSelector(getUserData);
+  const favourites = userData?.favourites;
+
   const { course } = props;
   const { id, videos } = course;
   const memoizedVideoId: string = useMemo(() => {
@@ -22,9 +32,30 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
     return slicedUrl[slicedUrl.length - 1];
   }, [videos?.[0].url]);
 
+  useEffect(() => {
+    if (favourites?.length) {
+      const foundFavorite = favourites.find((fav) => fav.courseId === course.id)
+      if (foundFavorite) {
+        setFavorite(true);
+      }
+    }
+  }, [favourites, course]);
+
+  const toggleFavorites = async () => {
+    if (!isFavorite) {
+      const fetchResponse = await fetch("/api/set-favorite", {
+        method: "POST",
+        body: JSON.stringify({ userId: userData?.id , courseId: id}),
+      });
+      let setFavoriteResp = await fetchResponse.json();
+      dispatch(addFavoriteCourse(setFavoriteResp?.favourite));
+    }
+    setFavorite(!isFavorite);
+  }
+
   return (
     <Card sx={{ width: "16rem", height: "100%", m: "1rem" }}>
-      <Link href={'/course/' + id}>
+      <Link href={"/course/" + id}>
         <CardActionArea>
           <CardMedia
             sx={{ height: "9rem" }}
@@ -39,8 +70,15 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
         </CardActionArea>
       </Link>
       <CardActions>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon color="error" />
+        <IconButton
+          aria-label="Toggle favorites"
+          onClick={() => toggleFavorites()}
+        >
+          {isFavorite ? (
+            <FavoriteIcon color="error" />
+          ) : (
+            <FavoriteIcon color="action" />
+          )}
         </IconButton>
       </CardActions>
     </Card>

@@ -34,7 +34,7 @@ function UserModal() {
 
   const fetchOrSetUserData = async (event: any) => {
     event?.preventDefault();
-    
+
     const fetchResponse = await fetch("/api/get-user", {
       method: "POST",
       body: JSON.stringify({ username }),
@@ -73,18 +73,8 @@ function UserModal() {
             sx={{ mt: 2 }}
             fullWidth
             onChange={(event) => setUsername(event.target.value)}
-            // onKeyDown={(evt) => {
-            //   if (evt.key === "Enter") {
-            //     fetchOrSetUserData();
-            //   }
-            // }}
           />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ mt: 2 }}
-            // onClick={() => fetchOrSetUserData()}
-          >
+          <Button type="submit" variant="contained" sx={{ mt: 2 }}>
             Enter
           </Button>
         </form>

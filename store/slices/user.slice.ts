@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { hydrate } from "../actions";
+import { addFavoriteCourse, hydrate } from "../actions";
 import { AppState, UserType, UserStateType } from "../types";
 import { coursesSlice } from "./courses.slice";
+import { Favourites } from "@prisma/client";
 
 export const userSlice = createSlice({
   name: "user",
@@ -32,7 +33,16 @@ export const userSlice = createSlice({
         : {
             ...state,
           };
-    });
+    })
+    .addCase(addFavoriteCourse, (state, action) => {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          favourites: [...state.data?.favourites as Favourites[], action.payload],
+        } as UserType
+      }
+    })
   },
 });
 
@@ -50,4 +60,12 @@ export const selectUserFavourites = (state: AppState) => {
   );
 
   return favouritesCourses?.length ? favouritesCourses : [];
+};
+
+export const isCourseFavorite = (id: string) => (state: AppState) => {
+  const favouritesCourses = state?.[userSlice.name]?.data?.favourites?.find(
+    (fav) => fav.courseId === id
+  );
+
+  return favouritesCourses?true:false;
 };

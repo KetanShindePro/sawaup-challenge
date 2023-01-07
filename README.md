@@ -10,6 +10,9 @@ This repository contains the Sawaup challenge related code.This is a [Next.js](h
 First, run the development server:
 
 ```bash
+npm install
+# and then run
+
 npm run dev
 # or
 yarn dev
