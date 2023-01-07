@@ -3,26 +3,25 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 import { Users } from "@prisma/client";
 
-type Data = {
-  name: string;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
   const username = JSON.parse(req.body)?.username;
-  console.log("req :", username);
-  const user: Users | null = await prisma.users.findUnique({
-    where: {
-      name: username,
-    },
-    include: {
-      favourites: true,
-    },
-  });
 
-  console.log("user: ", user);
+  if (username) {
+    const user: Users | null = await prisma.users.findUnique({
+      where: {
+        name: username,
+      },
+      include: {
+        favourites: true,
+      },
+    });
 
-  res.status(200).json({ user });
+    return res.status(200).json({ user });
+  }
+  else {
+    return res.status(400).json({ errorMessage: "malformed request!" });
+  }
 }
