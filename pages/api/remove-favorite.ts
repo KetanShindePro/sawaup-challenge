@@ -8,10 +8,12 @@ export default async function handler(
 ) {
   const { userId, courseId } = JSON.parse(req.body);
   if (userId && courseId) {
-    const favourite: Favourites = await prisma.favourites.create({
-      data: {
-        userId,
-        courseId,
+    const favourite: Favourites = await prisma.favourites.delete({
+      where: {
+        userId_courseId: {
+            userId,
+            courseId
+        }
       },
     });
 

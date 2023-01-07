@@ -11,7 +11,7 @@ import React from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../../store/slices/user.slice";
-import { addFavoriteCourse } from "../../store/actions";
+import { addFavoriteCourse, removeFavoriteCourse } from "../../store/actions";
 
 type CourseCard = {
   course: CourseType;
@@ -34,7 +34,9 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
 
   useEffect(() => {
     if (favourites?.length) {
-      const foundFavorite = favourites.find((fav) => fav.courseId === course.id)
+      const foundFavorite = favourites.find(
+        (fav) => fav.courseId === course.id
+      );
       if (foundFavorite) {
         setFavorite(true);
       }
@@ -45,13 +47,22 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
     if (!isFavorite) {
       const fetchResponse = await fetch("/api/set-favorite", {
         method: "POST",
-        body: JSON.stringify({ userId: userData?.id , courseId: id}),
+        body: JSON.stringify({ userId: userData?.id, courseId: id }),
       });
       let setFavoriteResp = await fetchResponse.json();
       dispatch(addFavoriteCourse(setFavoriteResp?.favourite));
+    } else {
+      const fetchResponse = await fetch("/api/remove-favorite", {
+        method: "POST",
+        body: JSON.stringify({ userId: userData?.id, courseId: id }),
+      });
+      let removeFavoriteResp = await fetchResponse.json();
+      dispatch(
+        removeFavoriteCourse(removeFavoriteResp?.favourite)
+      );
     }
     setFavorite(!isFavorite);
-  }
+  };
 
   return (
     <Card sx={{ width: "16rem", height: "100%", m: "1rem" }}>

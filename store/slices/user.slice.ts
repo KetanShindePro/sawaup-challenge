@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addFavoriteCourse, hydrate } from "../actions";
+import { addFavoriteCourse, hydrate, removeFavoriteCourse } from "../actions";
 import { AppState, UserType, UserStateType } from "../types";
 import { coursesSlice } from "./courses.slice";
 import { Favourites } from "@prisma/client";
@@ -24,25 +24,42 @@ export const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(hydrate, (state, action) => {
-      return action.payload.user.data
-        ? {
-            ...state,
-            ...action.payload.user,
-          }
-        : {
-            ...state,
-          };
-    })
-    .addCase(addFavoriteCourse, (state, action) => {
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          favourites: [...state.data?.favourites as Favourites[], action.payload],
-        } as UserType
-      }
-    })
+    builder
+      .addCase(hydrate, (state, action) => {
+        return action.payload.user.data
+          ? {
+              ...state,
+              ...action.payload.user,
+            }
+          : {
+              ...state,
+            };
+      })
+      .addCase(addFavoriteCourse, (state, action) => {
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            favourites: [
+              ...(state.data?.favourites as Favourites[]),
+              action.payload,
+            ],
+          } as UserType,
+        };
+      })
+      .addCase(removeFavoriteCourse, (state, action) => {
+        const { userId, courseId } = action.payload;
+        const filteredFavorites = state.data?.favourites?.filter(
+          (fav) => fav.userId !== userId || fav.courseId !== courseId
+        );
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            favourites: [...(filteredFavorites as Favourites[])],
+          } as UserType,
+        };
+      });
   },
 });
 
@@ -60,12 +77,4 @@ export const selectUserFavourites = (state: AppState) => {
   );
 
   return favouritesCourses?.length ? favouritesCourses : [];
-};
-
-export const isCourseFavorite = (id: string) => (state: AppState) => {
-  const favouritesCourses = state?.[userSlice.name]?.data?.favourites?.find(
-    (fav) => fav.courseId === id
-  );
-
-  return favouritesCourses?true:false;
 };

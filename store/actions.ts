@@ -26,3 +26,9 @@ export const addFavoriteCourse = createAction("ADD_FAVORITE_COURSE", function pr
     payload: payload,
   };
 });
+
+export const removeFavoriteCourse = createAction("REMOVE_FAVORITE_COURSE", function prepare(payload: Favourites) {
+  return {
+    payload: payload,
+  };
+});
