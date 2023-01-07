@@ -15,7 +15,7 @@ const makeStore = () =>
       getDefaultMiddleware({
         serializableCheck: false,
       }),
-    devTools: true,
+    // devTools: true,
   });
 
 export type AppStore = ReturnType<typeof makeStore>;

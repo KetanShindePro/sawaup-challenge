@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../../store/slices/user.slice";
 import { addFavoriteCourse, removeFavoriteCourse } from "../../store/actions";
+import { Favourites } from "@prisma/client";
 
 type CourseCard = {
   course: CourseType;
@@ -19,6 +20,7 @@ type CourseCard = {
 
 const CourseCard = React.memo(function CardComponent(props: CourseCard) {
   const [isFavorite, setFavorite] = useState(false);
+  const [favoriteEntry, setFavoriteEntry] = useState<Favourites>();
 
   const dispatch = useDispatch();
 
@@ -38,6 +40,7 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
         (fav) => fav.courseId === course.id
       );
       if (foundFavorite) {
+        setFavoriteEntry(foundFavorite);
         setFavorite(true);
       }
     }
@@ -54,12 +57,10 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
     } else {
       const fetchResponse = await fetch("/api/remove-favorite", {
         method: "POST",
-        body: JSON.stringify({ userId: userData?.id, courseId: id }),
+        body: JSON.stringify({ favoriteId: favoriteEntry?.id }),
       });
       let removeFavoriteResp = await fetchResponse.json();
-      dispatch(
-        removeFavoriteCourse(removeFavoriteResp?.favourite)
-      );
+      dispatch(removeFavoriteCourse(removeFavoriteResp?.favourite));
     }
     setFavorite(!isFavorite);
   };

@@ -57,12 +57,11 @@ model Videos {
 }
 
 model Favourites {
+  id          String    @default(cuid())    @id
   user        Users     @relation(fields: [userId], references: [id])
   userId      String
   course      Courses   @relation(fields: [courseId], references: [id])
   courseId    String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
-  @@id([userId, courseId])
 }

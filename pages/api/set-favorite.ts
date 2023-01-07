@@ -16,8 +16,7 @@ export default async function handler(
     });
 
     return res.status(200).json({ favourite });
-  }
-  else{
+  } else {
     return res.status(400).json({ errorMessage: "malformed request!" });
   }
 }

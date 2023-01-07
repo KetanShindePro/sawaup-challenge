@@ -6,20 +6,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
-  const { userId, courseId } = JSON.parse(req.body);
-  if (userId && courseId) {
+  const { favoriteId } = JSON.parse(req.body);
+  if (favoriteId) {
     const favourite: Favourites = await prisma.favourites.delete({
       where: {
-        userId_courseId: {
-            userId,
-            courseId
-        }
+        id: favoriteId,
       },
     });
 
     return res.status(200).json({ favourite });
-  }
-  else{
+  } else {
     return res.status(400).json({ errorMessage: "malformed request!" });
   }
 }
