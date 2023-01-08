@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
-  const username = JSON.parse(req.body)?.username;
+  const username: string = JSON.parse(req.body)?.username;
 
   if (username) {
     const user: Users | null = await prisma.users.findUnique({

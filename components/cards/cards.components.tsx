@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../../store/slices/user.slice";
 import { addFavoriteCourse, removeFavoriteCourse } from "../../store/actions";
 import { Favourites } from "@prisma/client";
+import { postFetch } from "../../lib/generic-fetch";
 
 type CourseCard = {
   course: CourseType;
@@ -25,7 +26,7 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
   const dispatch = useDispatch();
 
   const userData = useSelector(getUserData);
-  const favourites = userData?.favourites;
+  const favourites = userData?.favourites as Favourites[];
 
   const { course } = props;
   const { id, videos } = course;
@@ -48,25 +49,27 @@ const CourseCard = React.memo(function CardComponent(props: CourseCard) {
 
   const toggleFavorites = () => {
     if (!isFavorite) {
-      const fetchResponse = fetch("/api/set-favorite", {
-        method: "POST",
-        body: JSON.stringify({ userId: userData?.id, courseId: id }),
-      });
-      fetchResponse.then(async (data) => {
-        console.log("set-favorite : ", data);
-        let setFavoriteResp = await data.json();
-        dispatch(addFavoriteCourse(setFavoriteResp?.favourite));
-      });
+      postFetch(
+        "/api/set-favorite",
+        {
+          method: "POST",
+          body: JSON.stringify({ userId: userData?.id, courseId: id }),
+        },
+        (favoriteReqResp: { favourite: Favourites }) => {
+          dispatch(addFavoriteCourse(favoriteReqResp?.favourite));
+        }
+      );
     } else {
-      const fetchResponse = fetch("/api/remove-favorite", {
-        method: "POST",
-        body: JSON.stringify({ favoriteId: favoriteEntry?.id }),
-      });
-      fetchResponse.then(async (data) => {
-        console.log("remove-favorite : ", data);
-        let removeFavoriteResp = await data.json();
-        dispatch(removeFavoriteCourse(removeFavoriteResp?.favourite));
-      });
+      postFetch(
+        "/api/remove-favorite",
+        {
+          method: "POST",
+          body: JSON.stringify({ favoriteId: favoriteEntry?.id }),
+        },
+        (removeFavoriteResp: { favourite: Favourites }) => {
+          dispatch(removeFavoriteCourse(removeFavoriteResp?.favourite));
+        }
+      );
     }
     setFavorite(!isFavorite);
   };

@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
-  const { favoriteId } = JSON.parse(req.body);
+  const favoriteId: string = JSON.parse(req.body)?.favoriteId;
   if (favoriteId) {
     const favourite: Favourites = await prisma.favourites.delete({
       where: {

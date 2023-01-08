@@ -2,11 +2,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 import { Favourites } from "@prisma/client";
 
+interface UserCourseIDsI {
+  userId: string;
+  courseId: string;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
-  const { userId, courseId } = JSON.parse(req.body);
+  const { userId, courseId }: UserCourseIDsI = JSON.parse(req.body);
   if (userId && courseId) {
     const favourite: Favourites = await prisma.favourites.create({
       data: {

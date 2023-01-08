@@ -62,7 +62,7 @@ function UserModal() {
           Enter Username
         </Typography>
         <Typography id="modal-modal-description">
-          (Use the previous one if already entered.)
+          (Use the previous one if already entered. Or you can create new one just by entering new name below.)
         </Typography>
         <form onSubmit={fetchOrSetUserData}>
           <TextField
