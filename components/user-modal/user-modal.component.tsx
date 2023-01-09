@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserData, setUser } from "../../store/slices/user.slice";
 import { useEffect, useState } from "react";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { UserType } from "../../store/types";
+import { postFetch } from "../../lib/generic-fetch";
 
 const style = {
   position: "absolute" as "absolute",
@@ -34,6 +36,31 @@ function UserModal() {
 
   const fetchOrSetUserData = async (event: any) => {
     event?.preventDefault();
+
+    postFetch(
+      "/api/get-user",
+      {
+        method: "POST",
+      body: JSON.stringify({ username }),
+      },
+      (userReqResp: { user: UserType }) => {
+        if (!userReqResp?.user) {
+          postFetch(
+            "/api/set-user",
+            {
+              method: "POST",
+            body: JSON.stringify({ username }),
+            },
+            (createUserReqResp: { user: UserType }) => {
+              dispatch(setUser(createUserReqResp?.user));
+            }
+          );
+        }
+        else{
+          dispatch(setUser(userReqResp?.user));
+        }
+      }
+    );
 
     const fetchResponse = await fetch("/api/get-user", {
       method: "POST",
